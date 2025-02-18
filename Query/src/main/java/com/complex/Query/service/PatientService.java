@@ -20,6 +20,8 @@ public interface PatientService {
   // Delete a patient by its ID
   Mono<Void> deletePatient(Long id);
 
-  // Complex query: find patients by their last name
-  Flux<PatientDTO> findPatientsByLastName(String lastName);
+  // Complex queries to practise; :)
+  Flux<PatientDTO> searchPatientsByLastName(String lastName);
+  Flux<PatientDTO> getPatientsLastNameAndFirstName(String firstName, String lastName);
+  Flux<PatientDTO> getPatientsStateWithSameLastName(String state, String lastName);
 }

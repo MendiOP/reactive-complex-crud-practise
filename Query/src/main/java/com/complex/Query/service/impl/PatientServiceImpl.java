@@ -1,5 +1,7 @@
 package com.complex.Query.service.impl;
 
+import static org.modelmapper.Converters.Collection.map;
+
 import com.complex.Query.dto.PatientDTO;
 import com.complex.Query.model.Patient;
 import com.complex.Query.repository.PatientRepository;
@@ -43,10 +45,9 @@ public class PatientServiceImpl implements PatientService {
   @Override
   public Mono<PatientDTO> updatePatient(Long id, PatientDTO patientDTO) {
 
-    Mono<Patient> byId = patientRepository.findById(id);
     Patient updatedPatient = modelMapper.map(patientDTO, Patient.class);
 
-    Mono<Patient> patientMono = byId.flatMap(patient -> {
+    return patientRepository.findById(id).flatMap(patient -> {
       patient.setAddress(updatedPatient.getAddress());
       patient.setCity(updatedPatient.getCity());
       patient.setCountry(updatedPatient.getCountry());
@@ -60,9 +61,7 @@ public class PatientServiceImpl implements PatientService {
       patient.setState(updatedPatient.getState());
 
       return patientRepository.save(patient);
-    });
-
-    return patientMono.map(patient -> modelMapper.map(patient, PatientDTO.class));
+    }).map(patient -> modelMapper.map(patient, PatientDTO.class));
   }
 
   @Override
@@ -71,7 +70,28 @@ public class PatientServiceImpl implements PatientService {
   }
 
   @Override
-  public Flux<PatientDTO> findPatientsByLastName(String lastName) {
-    return null;
+  public Flux<PatientDTO> searchPatientsByLastName(String lastName) {
+    Flux<Patient> patientsLastName = patientRepository.getPatientsLastName(lastName);
+
+    return patientsLastName.map(
+        patient -> modelMapper.map(patient, PatientDTO.class));
+  }
+
+  @Override
+  public Flux<PatientDTO> getPatientsLastNameAndFirstName(String firstName, String lastName) {
+
+    Flux<Patient> patientsLastNameAndFirstName = patientRepository.getPatientsLastNameAndFirstName(
+        firstName, lastName);
+
+    return patientsLastNameAndFirstName.map(patient -> modelMapper.map(patient, PatientDTO.class));
+  }
+
+  @Override
+  public Flux<PatientDTO> getPatientsStateWithSameLastName(String state, String lastName) {
+
+    Flux<Patient> patientsAddressWithSameLastName = patientRepository.getPatientsStateWithSameLastName(
+        state, lastName);
+
+    return patientsAddressWithSameLastName.map(patient -> modelMapper.map(patient, PatientDTO.class));
   }
 }

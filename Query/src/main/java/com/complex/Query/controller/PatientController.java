@@ -58,15 +58,18 @@ public class PatientController {
   }
 
   // Complex query endpoint: find patients by last name
-  @GetMapping("/search/by-lastname")
-  public Flux<PatientDTO> findPatientsByLastName(@RequestParam String lastName) {
-    return patientService.findPatientsByLastName(lastName);
+  @GetMapping("/search/l")
+  public Flux<PatientDTO> findPatientsByLastName(@RequestParam("lastname") String lastName) {
+    return patientService.searchPatientsByLastName(lastName);
   }
 
-  // Example of a complex query endpoint (if you have defined one in the repository)
-  // @GetMapping("/search/upcoming")
-  // public Flux<Patient> findPatientsWithUpcomingAppointments(@RequestParam String date) {
-  //     LocalDate appointmentDate = LocalDate.parse(date);
-  //     return patientRepository.findPatientsWithUpcomingAppointments(appointmentDate);
-  // }
+  @GetMapping("/search/f")
+  public Flux<PatientDTO> getPatientsWithLastNameAndFirstName(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
+    return patientService.getPatientsLastNameAndFirstName(firstName, lastName);
+  }
+
+  @GetMapping("/search/al")
+  public Flux<PatientDTO> getPatientsAddressWithSameLastName(@RequestParam("state") String state, @RequestParam("lastName") String lastName) {
+    return patientService.getPatientsStateWithSameLastName(state, lastName);
+  }
 }
