@@ -72,4 +72,10 @@ public class PatientController {
   public Flux<PatientDTO> getPatientsAddressWithSameLastName(@RequestParam("state") String state, @RequestParam("lastName") String lastName) {
     return patientService.getPatientsStateWithSameLastName(state, lastName);
   }
+
+  @GetMapping("/dob")
+  public Flux<PatientDTO> getPatientsFromD1toD2(@RequestParam("from") String date1, @RequestParam("to") String date2) {
+    System.out.println(date1 + " " + date2);
+    return patientService.getPatientsFromD1toD2(date1, date2);
+  }
 }

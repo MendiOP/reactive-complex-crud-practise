@@ -94,4 +94,11 @@ public class PatientServiceImpl implements PatientService {
 
     return patientsAddressWithSameLastName.map(patient -> modelMapper.map(patient, PatientDTO.class));
   }
+
+  @Override
+  public Flux<PatientDTO> getPatientsFromD1toD2(String date1, String date2) {
+    Flux<Patient> patientsFromD1toD2 = patientRepository.getPatientsFromD1toD2(date1, date2);
+    return patientsFromD1toD2.map(patient -> modelMapper.map(patient, PatientDTO.class));
+//    return null;
+  }
 }

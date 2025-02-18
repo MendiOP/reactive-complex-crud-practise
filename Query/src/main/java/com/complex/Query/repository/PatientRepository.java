@@ -3,10 +3,11 @@ package com.complex.Query.repository;
 import com.complex.Query.model.Patient;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
+import org.springframework.web.bind.annotation.RequestParam;
 import reactor.core.publisher.Flux;
 
 public interface PatientRepository extends ReactiveCrudRepository<Patient, Long> {
-  // Simple custom query: find patients by last name
+
   @Query(value = "select * from patient where last_name=:lastName")
   Flux<Patient> getPatientsLastName(String lastName);
 
@@ -16,4 +17,13 @@ public interface PatientRepository extends ReactiveCrudRepository<Patient, Long>
 
   @Query(value="select * from patient where state=:state and last_name=:lastName")
   Flux<Patient> getPatientsStateWithSameLastName(String state, String lastName);
+
+
+  //get data from d1 to d2
+  @Query("SELECT * " +
+      "FROM patient " +
+      "WHERE STR_TO_DATE(date_of_birth, '%d-%m-%Y') > STR_TO_DATE(:date1, '%d-%m-%Y') " +
+      "AND STR_TO_DATE(date_of_birth, '%d-%m-%Y') < STR_TO_DATE(:date2, '%d-%m-%Y')")
+  Flux<Patient> getPatientsFromD1toD2(@RequestParam("from") String date1, @RequestParam("to") String date2);
+
 }
