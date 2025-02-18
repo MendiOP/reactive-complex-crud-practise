@@ -7,16 +7,15 @@ import reactor.core.publisher.Mono;
 
 public interface PatientService {
   // Retrieve all patients
-  Flux<Patient> getAllPatients();
+  Flux<PatientDTO> getAllPatients();
 
   // Retrieve a patient by its ID
   Mono<PatientDTO> getPatientById(Long id);
 
-  // Create a new patient
-  Mono<PatientDTO> createPatient(Patient patient);
+  Mono<PatientDTO> createPatient(PatientDTO patientDTO);
 
   // Update an existing patient
-  Mono<PatientDTO> updatePatient(Long id, Patient patient);
+  Mono<PatientDTO> updatePatient(Long id, PatientDTO patientDTO);
 
   // Delete a patient by its ID
   Mono<Void> deletePatient(Long id);

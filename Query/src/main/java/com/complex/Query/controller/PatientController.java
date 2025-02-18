@@ -29,7 +29,7 @@ public class PatientController {
 
   // Retrieve all patients
   @GetMapping
-  public Flux<Patient> getAllPatients() {
+  public Flux<PatientDTO> getAllPatients() {
     return patientService.getAllPatients();
   }
 
@@ -41,14 +41,14 @@ public class PatientController {
 
   // Create a new patient
   @PostMapping
-  public Mono<PatientDTO> createPatient(@RequestBody Patient patient) {
-    return patientService.createPatient(patient);
+  public Mono<PatientDTO> createPatient(@RequestBody PatientDTO patientDTO) {
+    return patientService.createPatient(patientDTO);
   }
 
   // Update an existing patient
   @PutMapping("/{id}")
-  public Mono<PatientDTO> updatePatient(@PathVariable Long id, @RequestBody Patient patient) {
-    return patientService.updatePatient(id, patient);
+  public Mono<PatientDTO> updatePatient(@PathVariable Long id, @RequestBody PatientDTO patientDTO) {
+    return patientService.updatePatient(id, patientDTO);
   }
 
   // Delete a patient by ID
