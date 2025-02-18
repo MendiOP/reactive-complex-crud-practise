@@ -75,7 +75,7 @@ public class PatientController {
 
   @GetMapping("/dob")
   public Flux<PatientDTO> getPatientsFromD1toD2(@RequestParam("from") String date1, @RequestParam("to") String date2) {
-    System.out.println(date1 + " " + date2);
+//    System.out.println(date1 + " " + date2);
     return patientService.getPatientsFromD1toD2(date1, date2);
   }
 }
