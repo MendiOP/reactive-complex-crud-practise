@@ -1,6 +1,7 @@
 package com.complex.Query.service.impl;
 
 import com.complex.Query.dto.DoctorDTO;
+import com.complex.Query.dto.PatientDTO;
 import com.complex.Query.model.Doctor;
 import com.complex.Query.repository.DoctorRepository;
 import com.complex.Query.service.DoctorService;
@@ -55,5 +56,21 @@ public class DoctorServiceImpl implements DoctorService {
   @Override
   public Flux<DoctorDTO> getAllDoctors() {
     return doctorRepository.findAll().map(doctor -> modelMapper.map(doctor, DoctorDTO.class));
+  }
+
+  @Override
+  public Flux<DoctorDTO> getDoctorsWhoHadPatients() {
+
+    Flux<Long> doctorsWhoHadPatient = doctorRepository.getDoctorsWhoHadPatient();
+    Flux<Doctor> doctorFlux = doctorsWhoHadPatient
+        .flatMap(doctorRepository::findById);
+
+    return doctorFlux.map(doctor -> modelMapper.map(doctor, DoctorDTO.class));
+  }
+
+  @Override
+  public Flux<PatientDTO> getAllPatientsByDoctorId(Long id) {
+    return doctorRepository.getAllPatientsByDoctorId(id)
+        .map(doctor -> modelMapper.map(doctor, PatientDTO.class));
   }
 }

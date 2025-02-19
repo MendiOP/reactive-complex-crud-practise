@@ -1,6 +1,7 @@
 package com.complex.Query.controller;
 
 import com.complex.Query.dto.DoctorDTO;
+import com.complex.Query.dto.PatientDTO;
 import com.complex.Query.service.impl.DoctorServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,5 +53,21 @@ public class DoctorController {
   public Mono<ResponseEntity<Void>> deleteDoctor(@PathVariable Long id) {
     return doctorService.deleteDoctor(id)
         .then(Mono.just(ResponseEntity.noContent().build()));
+  }
+
+  //custom apis
+  @GetMapping("/have/patients")
+  public Mono<ResponseEntity<List<DoctorDTO>>> getAllDoctorsWhoHadPatients() {
+    return doctorService
+        .getDoctorsWhoHadPatients()
+        .collectList()
+        .map(doctorDTO -> ResponseEntity.ok(doctorDTO));
+  }
+
+  @GetMapping("/allpatients/{id}")
+  public Mono<ResponseEntity<List<PatientDTO>>> getAllDoctorsForAPatient(@PathVariable Long id) {
+    return doctorService.getAllPatientsByDoctorId(id)
+        .collectList()
+        .map(doctorDTO -> ResponseEntity.ok(doctorDTO));
   }
 }

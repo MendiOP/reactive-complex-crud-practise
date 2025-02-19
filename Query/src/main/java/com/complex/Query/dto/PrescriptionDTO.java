@@ -6,6 +6,7 @@ import lombok.Setter;
 
 
 public class PrescriptionDTO{
+  private Long prescriptionId;
   private Long patientId;
   private Long doctorId;
   private String medicationName;
@@ -19,9 +20,10 @@ public class PrescriptionDTO{
   public PrescriptionDTO() {
   }
 
-  public PrescriptionDTO(Long patientId, Long doctorId, String medicationName, String dosage,
+  public PrescriptionDTO(Long prescriptionId, Long patientId, Long doctorId, String medicationName, String dosage,
       String frequency, String duration, String instructions, LocalDate datePrescribed,
       String refillInfo) {
+    this.prescriptionId = prescriptionId;
     this.patientId = patientId;
     this.doctorId = doctorId;
     this.medicationName = medicationName;
@@ -39,6 +41,14 @@ public class PrescriptionDTO{
 
   public void setPatientId(Long patientId) {
     this.patientId = patientId;
+  }
+
+  public Long getPrescriptionId() {
+    return prescriptionId;
+  }
+
+  public void setPrescriptionId(Long prescriptionId) {
+    this.prescriptionId = prescriptionId;
   }
 
   public Long getDoctorId() {

@@ -1,6 +1,7 @@
 package com.complex.Query.repository;
 
 import com.complex.Query.model.Patient;
+import com.complex.Query.model.Prescription;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
@@ -41,4 +42,7 @@ public interface PatientRepository extends ReactiveCrudRepository<Patient, Long>
       + "    )\n")
   Flux<Patient> getPatientsBySearch(String city, String state, String gender, String fromDate, String toDate);
 
+  //all prescriptions for a Patient
+  @Query("SELECT * FROM prescription WHERE patient_id = :id")
+  Flux<Prescription> getAllPrescriptionsByPatient(Long id);
 }

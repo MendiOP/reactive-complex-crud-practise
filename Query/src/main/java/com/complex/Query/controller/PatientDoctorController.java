@@ -21,7 +21,7 @@ public class PatientDoctorController {
     this.patientDoctorService = patientDoctorService;
   }
 
-  @GetMapping("/all")
+  @GetMapping()
   public Flux<PatientDoctorDTO> getPatientDoctors() {
     return patientDoctorService.getAllPatientWithDoctors();
   }

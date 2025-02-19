@@ -108,4 +108,10 @@ public class PatientServiceImpl implements PatientService {
     Flux<Patient> patientsFromTopStates = patientRepository.getPatientsBySearch(city, state, gender, fromDate, toDate);
     return patientsFromTopStates.map(patient -> modelMapper.map(patient, PatientDTO.class));
   }
+
+  @Override
+  public Flux<PatientDTO> getPrescriptionsByPatient(Long id) {
+    return patientRepository.getAllPrescriptionsByPatient(id)
+        .map(prescription -> modelMapper.map(prescription, PatientDTO.class));
+  }
 }

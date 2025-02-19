@@ -89,4 +89,10 @@ public class PatientController {
       @RequestParam(value = "toDate", required = false) String toDate) {
     return patientService.getPatientsBySearch(city, state, gender, fromDate, toDate);
   }
+
+
+  @GetMapping("/prescription")
+  public Flux<PatientDTO> getPrescriptionsByPatients(@RequestParam("id") Long id){
+    return patientService.getPrescriptionsByPatient(id);
+  }
 }

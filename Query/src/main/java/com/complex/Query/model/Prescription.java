@@ -28,7 +28,6 @@ public class Prescription {
   private String instructions;
 
   @Column("date_prescribed")
-
   private LocalDate datePrescribed;
 
   @Column("refill_info")

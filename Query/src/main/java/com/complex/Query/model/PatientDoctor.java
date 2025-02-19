@@ -7,6 +7,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table("patientdoctor")
 public class PatientDoctor {
   @Id
+  @Column("pdId")
   private Long pdId;
 
   //foreign keys
