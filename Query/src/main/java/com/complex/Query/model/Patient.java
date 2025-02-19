@@ -1,5 +1,7 @@
 package com.complex.Query.model;
 
+import com.complex.Query.dto.PrescriptionDTO;
+import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
@@ -28,14 +30,23 @@ public class Patient{
   private String contactNumber;
   private String email;
   private String country;
+  private List<PrescriptionDTO> prescriptions;
 
   public Patient() {
+  }
+
+  public List<PrescriptionDTO> getPrescriptions() {
+    return prescriptions;
+  }
+
+  public void setPrescriptions(List<PrescriptionDTO> prescriptions) {
+    this.prescriptions = prescriptions;
   }
 
   public Patient(Long patientId, String firstName, String lastName, String gender,
       String dateOfBirth,
       String address, String city, String state, String zip, String contactNumber, String email,
-      String country) {
+      String country, List<PrescriptionDTO> prescriptions) {
     this.patientId = patientId;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -48,6 +59,7 @@ public class Patient{
     this.contactNumber = contactNumber;
     this.email = email;
     this.country = country;
+    this.prescriptions = prescriptions;
   }
 
   public Long getPatientId() {

@@ -1,5 +1,7 @@
 package com.complex.Query.dto;
 
+import java.util.List;
+
 public class PatientDTO {
   private Long patientId;
   private String firstName;
@@ -13,13 +15,13 @@ public class PatientDTO {
   private String contactNumber;
   private String email;
   private String country;
-
+  private List<PrescriptionDTO> prescriptions;
   public PatientDTO() {
   }
 
   public PatientDTO(Long patientId, String firstName, String lastName, String gender,
       String dateOfBirth, String address, String city, String state, String zip, String email,
-      String contactNumber, String country) {
+      String contactNumber, String country, List<PrescriptionDTO> prescriptions) {
     this.patientId = patientId;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -32,6 +34,15 @@ public class PatientDTO {
     this.email = email;
     this.contactNumber = contactNumber;
     this.country = country;
+    this.prescriptions = prescriptions;
+  }
+
+  public List<PrescriptionDTO> getPrescriptions() {
+    return prescriptions;
+  }
+
+  public void setPrescriptions(List<PrescriptionDTO> prescriptions) {
+    this.prescriptions = prescriptions;
   }
 
   public Long getPatientId() {
