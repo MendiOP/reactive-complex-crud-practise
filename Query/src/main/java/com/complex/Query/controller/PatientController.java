@@ -4,6 +4,7 @@ import com.complex.Query.dto.PatientDTO;
 import com.complex.Query.model.Patient;
 import com.complex.Query.repository.PatientRepository;
 import com.complex.Query.service.PatientService;
+import com.complex.Query.service.impl.PatientServiceImpl;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,10 +21,10 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/patient")
 public class PatientController {
-  private final PatientService patientService;
+  private final PatientServiceImpl patientService;
 
   // Constructor injection of the service
-  public PatientController(PatientService patientService) {
+  public PatientController(PatientServiceImpl patientService) {
     this.patientService = patientService;
   }
 
@@ -77,5 +78,15 @@ public class PatientController {
   public Flux<PatientDTO> getPatientsFromD1toD2(@RequestParam("from") String date1, @RequestParam("to") String date2) {
 //    System.out.println(date1 + " " + date2);
     return patientService.getPatientsFromD1toD2(date1, date2);
+  }
+
+  @GetMapping("/search")
+  public Flux<PatientDTO> getPatientsBySearch(
+      @RequestParam(value = "city", required = false) String city,
+      @RequestParam(value = "state", required = false) String state,
+      @RequestParam(value = "gender", required = false) String gender,
+      @RequestParam(value = "fromDate", required = false) String fromDate,
+      @RequestParam(value = "toDate", required = false) String toDate) {
+    return patientService.getPatientsBySearch(city, state, gender, fromDate, toDate);
   }
 }

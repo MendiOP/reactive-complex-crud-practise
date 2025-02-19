@@ -25,4 +25,5 @@ public interface PatientService {
   Flux<PatientDTO> getPatientsLastNameAndFirstName(String firstName, String lastName);
   Flux<PatientDTO> getPatientsStateWithSameLastName(String state, String lastName);
   Flux<PatientDTO> getPatientsFromD1toD2(String date1, String date2);
+  Flux<PatientDTO> getPatientsBySearch(String city, String state, String gender, String fromDate, String toDate);
 }

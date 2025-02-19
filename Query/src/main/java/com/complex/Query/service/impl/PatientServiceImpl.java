@@ -101,4 +101,11 @@ public class PatientServiceImpl implements PatientService {
     return patientsFromD1toD2.map(patient -> modelMapper.map(patient, PatientDTO.class));
 //    return null;
   }
+
+  @Override
+  public Flux<PatientDTO> getPatientsBySearch(String city, String state, String gender, String fromDate, String toDate) {
+
+    Flux<Patient> patientsFromTopStates = patientRepository.getPatientsBySearch(city, state, gender, fromDate, toDate);
+    return patientsFromTopStates.map(patient -> modelMapper.map(patient, PatientDTO.class));
+  }
 }

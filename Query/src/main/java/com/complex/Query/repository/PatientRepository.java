@@ -2,6 +2,7 @@ package com.complex.Query.repository;
 
 import com.complex.Query.model.Patient;
 import org.springframework.data.r2dbc.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.web.bind.annotation.RequestParam;
 import reactor.core.publisher.Flux;
@@ -25,5 +26,19 @@ public interface PatientRepository extends ReactiveCrudRepository<Patient, Long>
       "WHERE STR_TO_DATE(date_of_birth, '%d-%m-%Y') > STR_TO_DATE(:date1, '%d-%m-%Y') " +
       "AND STR_TO_DATE(date_of_birth, '%d-%m-%Y') < STR_TO_DATE(:date2, '%d-%m-%Y')")
   Flux<Patient> getPatientsFromD1toD2(@RequestParam("from") String date1, @RequestParam("to") String date2);
+
+
+  //query to fetch data from multiple or single criteria
+  @Query("SELECT *\n"
+      + "FROM patient\n"
+      + "WHERE \n"
+      + "    (:city IS NULL OR city = :city)\n"
+      + "    AND (:state IS NULL OR state = :state)\n"
+      + "    AND (:gender IS NULL OR gender = :gender)\n"
+      + "    AND (\n"
+      + "         (:fromDate IS NULL OR STR_TO_DATE(date_of_birth, '%d-%m-%Y') >= STR_TO_DATE(:fromDate, '%d-%m-%Y'))\n"
+      + "         AND (:toDate IS NULL OR STR_TO_DATE(date_of_birth, '%d-%m-%Y') <= STR_TO_DATE(:toDate, '%d-%m-%Y'))\n"
+      + "    )\n")
+  Flux<Patient> getPatientsBySearch(String city, String state, String gender, String fromDate, String toDate);
 
 }
