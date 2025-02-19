@@ -75,6 +75,8 @@ public class DoctorServiceImpl implements DoctorService {
   }
 
   @Override
+
+  //getting all the patients with their prescriptions that is given by a specific doctor
   public Flux<PatientDTO> getAllPatientsByDoctorId(Long doctorId) {
     return doctorRepository.getAllPatientsByDoctorId(doctorId)
         .flatMap(patient ->
