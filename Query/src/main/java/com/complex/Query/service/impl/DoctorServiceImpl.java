@@ -40,11 +40,7 @@ public class DoctorServiceImpl implements DoctorService {
     Mono<Doctor> byId = doctorRepository.findById(id);
 
     return byId.flatMap(doctor -> {
-      doctor.setContactNumber(map.getContactNumber());
-      doctor.setEmail(map.getEmail());
-      doctor.setFirstName(map.getFirstName());
-      doctor.setLastName(map.getLastName());
-      doctor.setSpecialty(map.getSpecialty());
+      modelMapper.map(doctorDTO, doctor);
       return doctorRepository.save(doctor);
     }).map(doctor -> modelMapper.map(doctor, DoctorDTO.class));
   }

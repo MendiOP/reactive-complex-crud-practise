@@ -45,23 +45,13 @@ public class PatientServiceImpl implements PatientService {
   @Override
   public Mono<PatientDTO> updatePatient(Long id, PatientDTO patientDTO) {
 
-    Patient updatedPatient = modelMapper.map(patientDTO, Patient.class);
-
-    return patientRepository.findById(id).flatMap(patient -> {
-      patient.setAddress(updatedPatient.getAddress());
-      patient.setCity(updatedPatient.getCity());
-      patient.setCountry(updatedPatient.getCountry());
-      patient.setEmail(updatedPatient.getEmail());
-      patient.setGender(updatedPatient.getGender());
-      patient.setFirstName(updatedPatient.getFirstName());
-      patient.setLastName(updatedPatient.getLastName());
-      patient.setContactNumber(updatedPatient.getContactNumber());
-      patient.setDateOfBirth(updatedPatient.getDateOfBirth());
-      patient.setZip(updatedPatient.getZip());
-      patient.setState(updatedPatient.getState());
-
-      return patientRepository.save(patient);
-    }).map(patient -> modelMapper.map(patient, PatientDTO.class));
+    return patientRepository
+        .findById(id)
+        .flatMap(patient -> {
+              modelMapper.map(patientDTO, patient);
+              return patientRepository.save(patient);
+              })
+        .map(patient -> modelMapper.map(patient, PatientDTO.class));
   }
 
   @Override

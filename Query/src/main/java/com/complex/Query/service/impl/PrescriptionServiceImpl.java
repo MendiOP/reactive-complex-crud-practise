@@ -55,20 +55,10 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     Mono<Prescription> byId = prescriptionRepository
         .findById(id);
 
-    Prescription map = modelMapper.map(prescriptionDTO, Prescription.class);
-
     return byId.flatMap(prescription -> {
-      prescription.setDatePrescribed(map.getDatePrescribed());
-      prescription.setDoctorId(map.getDoctorId());
-      prescription.setDosage(map.getDosage());
-      prescription.setDuration(map.getDuration());
-      prescription.setInstructions(map.getInstructions());
-      prescription.setFrequency(map.getFrequency());
-      prescription.setMedicationName(map.getMedicationName());
-      prescription.setPatientId(map.getPatientId());
-      prescription.setRefillInfo(map.getRefillInfo());
-
+      modelMapper.map(prescriptionDTO, prescription);
       return prescriptionRepository.save(prescription);
-    }).map(prescription -> modelMapper.map(prescription, PrescriptionDTO.class));
+    })
+        .map(prescription -> modelMapper.map(prescription, PrescriptionDTO.class));
   }
 }
